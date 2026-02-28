@@ -1,0 +1,107 @@
+アプリ
+
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<title>推し活家計簿</title>
+<style>
+body {
+  font-family: sans-serif;
+  background: #fff0f6;
+  padding: 20px;
+}
+h1 {
+  text-align: center;
+}
+input, select, button {
+  padding: 8px;
+  margin: 5px 0;
+  width: 100%;
+}
+button {
+  background: #ff69b4;
+  color: white;
+  border: none;
+  cursor: pointer;
+}
+button:hover {
+  opacity: 0.8;
+}
+.card {
+  background: white;
+  padding: 10px;
+  margin-top: 10px;
+  border-radius: 8px;
+}
+.total {
+  font-weight: bold;
+  margin-top: 15px;
+}
+</style>
+</head>
+
+<body>
+
+<h1>💖 推し活家計簿 💖</h1>
+
+<label>今月の所持金</label>
+<input type="number" id="budget" placeholder="例：50000">
+
+<label>推し名</label>
+<input type="text" id="oshi">
+
+<label>カテゴリ</label>
+<select id="category">
+  <option>グッズ</option>
+  <option>イベント</option>
+  <option>交通費</option>
+  <option>配信</option>
+</select>
+
+<label>使った金額</label>
+<input type="number" id="amount">
+
+<button onclick="addExpense()">追加する</button>
+
+<div id="list"></div>
+
+<div class="total">
+  合計使用額: ¥<span id="total">0</span><br>
+  残り: ¥<span id="remain">0</span>
+</div>
+
+<script>
+let total = 0;
+
+function addExpense() {
+  const oshi = document.getElementById("oshi").value;
+  const category = document.getElementById("category").value;
+  const amount = Number(document.getElementById("amount").value);
+  const budget = Number(document.getElementById("budget").value);
+
+  if (!oshi || !amount) {
+    alert("推し名と金額を入力してね！");
+    return;
+  }
+
+  total += amount;
+
+  const card = document.createElement("div");
+  card.className = "card";
+  card.innerHTML = `
+    <strong>${oshi}</strong><br>
+    ${category} - ¥${amount}
+  `;
+  document.getElementById("list").appendChild(card);
+
+  document.getElementById("total").textContent = total;
+  document.getElementById("remain").textContent = budget - total;
+
+  document.getElementById("oshi").value = "";
+  document.getElementById("amount").value = "";
+}
+</script>
+
+</body>
+</html>
